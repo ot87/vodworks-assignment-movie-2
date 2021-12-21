@@ -1,0 +1,11 @@
+.genre-item {
+  padding: 10px;
+
+  font-size: 20px;
+  text-transform: capitalize;
+}
+
+.genre-item-selected {
+  border: 2px solid;
+  border-radius: 5px;
+}
