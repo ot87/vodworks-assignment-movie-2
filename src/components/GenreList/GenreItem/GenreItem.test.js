@@ -20,10 +20,16 @@ describe('GenreItem', () => {
     const { rerender } = render(<GenreItem item={item} onClick={jest.fn()} />);
 
     rerender(<GenreItem item={item} isSelected={true} onClick={jest.fn()} />);
-    expect(screen.getByText(item)).toHaveClass('genre-item-selected');
+
+    let genreItem = screen.getByText(item);
+    expect(genreItem).toHaveClass('genre-item-selected');
+    expect(genreItem).toContainHTML('<span class="arrow"></span>');
 
     rerender(<GenreItem item={item} isSelected={false} onClick={jest.fn()} />);
-    expect(screen.getByText(item)).not.toHaveClass('genre-item-selected');
+
+    genreItem = screen.getByText(item);
+    expect(genreItem).not.toHaveClass('genre-item-selected');
+    expect(genreItem).not.toContainHTML('<span class="arrow"></span>');
   });
 
   it('calls the onClick callback handler', () => {

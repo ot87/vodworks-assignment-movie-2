@@ -15,15 +15,16 @@ function GenreItem({
   onClick
 }) {
   const handleOnClick = () => {
-    onClick(item)
+    onClick(item);
   };
 
   return (
     <div
-      className={`genre-item ${isSelected ? 'genre-item-selected' : ''}`}
+      className={`genre-item${isSelected ? ' genre-item-selected' : ''}`}
       onClick={handleOnClick}
     >
       {item}
+      {isSelected ? <span className='arrow'></span> : ''}
     </div>
   );
 }
