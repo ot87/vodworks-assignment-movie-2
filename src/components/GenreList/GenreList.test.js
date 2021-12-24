@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import GenreList from '.';
@@ -15,9 +15,10 @@ describe('GenreList', () => {
   it('renders with two genres', () => {
     render(<GenreList list={genres} onSelect={jest.fn()} />);
 
-    expect(screen.getByRole('navigation')).toBeInTheDocument();
-    expect(screen.getByText('genre1')).toBeInTheDocument();
-    expect(screen.getByText('genre2')).toBeInTheDocument();
+    const genreList = screen.getByRole('navigation');
+    expect(genreList).toBeInTheDocument();
+    expect(within(genreList).getByText('genre1')).toBeInTheDocument();
+    expect(within(genreList).getByText('genre2')).toBeInTheDocument();
   });
 
   it('renders with two not selected genres', () => {
