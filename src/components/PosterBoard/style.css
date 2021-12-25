@@ -1,0 +1,7 @@
+.poster-board {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: 300px;
+  width: 75%;
+}
