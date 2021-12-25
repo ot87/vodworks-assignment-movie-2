@@ -9,7 +9,9 @@ describe('GenreList', () => {
   it('renders with an empty list', () => {
     render(<GenreList list={[]} onSelect={jest.fn()} />);
 
-    expect(screen.getByRole('navigation')).toBeInTheDocument();
+    const genreList = screen.getByRole('navigation');
+    expect(genreList).toBeInTheDocument();
+    expect(genreList).toBeEmptyDOMElement();
   });
 
   it('renders with two genres', () => {

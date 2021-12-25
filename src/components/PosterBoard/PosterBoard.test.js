@@ -23,7 +23,9 @@ describe('PosterBoard', () => {
   it('renders an empty board', () => {
     render(<PosterBoard movies={[]} />);
 
-    expect(screen.getByRole('grid')).toBeInTheDocument();
+    const posterBoard = screen.getByRole('grid');
+    expect(posterBoard).toBeInTheDocument();
+    expect(posterBoard).toBeEmptyDOMElement();
   });
 
   it('renders with two movie posters', () => {
