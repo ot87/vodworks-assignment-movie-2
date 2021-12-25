@@ -3,9 +3,10 @@ import userEvent from '@testing-library/user-event';
 
 import Poster from '.';
 import { movies } from '../../../utils/testData';
+import { getByRoleOption } from '../../../utils/testHelpers';
 
 const movie = movies[0];
-const byRoleOption = { name: `The poster of the "${movie.title}"` };
+const byRoleOption = getByRoleOption(movie.title);
 
 describe('Poster', () => {
   it('renders with src and alt attributes', () => {
