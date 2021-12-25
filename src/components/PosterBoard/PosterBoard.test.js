@@ -2,20 +2,7 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import PosterBoard from '.';
-
-const movies = [{
-  genre_ids: ['genre_id1'],
-  poster_path: 'poster_path1',
-  title: 'title1',
-  overview: 'overview1',
-  release_date: 'release_date1'
-}, {
-  genre_ids: ['genre_id2'],
-  poster_path: 'poster_path2',
-  title: 'title2',
-  overview: 'overview2',
-  release_date: 'release_date2'
-}];
+import { movies } from '../../utils/testData';
 
 const byRoleOption = (name) => ({ name: `The poster of the "${name}"` });
 
@@ -34,15 +21,13 @@ describe('PosterBoard', () => {
     const posterBoard = screen.getByRole('grid');
     expect(posterBoard).toBeInTheDocument();
 
-    const poster1 = within(posterBoard).getByRole('img', byRoleOption(movies[0].title));
-    expect(poster1).toBeInTheDocument();
-    expect(poster1).toHaveAttribute('src', movies[0].poster_path);
-    expect(poster1).toHaveAttribute('alt', byRoleOption(movies[0].title).name);
+    movies.forEach(movie => {
+      const poster = within(posterBoard).getByRole('img', byRoleOption(movie.title));
 
-    const poster2 = within(posterBoard).getByRole('img', byRoleOption(movies[1].title));
-    expect(poster2).toBeInTheDocument();
-    expect(poster2).toHaveAttribute('src', movies[1].poster_path);
-    expect(poster2).toHaveAttribute('alt', byRoleOption(movies[1].title).name);
+      expect(poster).toBeInTheDocument();
+      expect(poster).toHaveAttribute('src', movie.poster_path);
+      expect(poster).toHaveAttribute('alt', byRoleOption(movie.title).name);
+    });
   });
 
   it('selects one movie poster and then another one', () => {

@@ -2,8 +2,7 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import GenreList from '.';
-
-const genres = ['genre1', 'genre2'];
+import { genres } from '../../utils/testData';
 
 describe('GenreList', () => {
   it('renders with an empty list', () => {
@@ -14,30 +13,32 @@ describe('GenreList', () => {
     expect(genreList).toBeEmptyDOMElement();
   });
 
-  it('renders with two genres', () => {
+  it('renders with three genres', () => {
     render(<GenreList list={genres} onSelect={jest.fn()} />);
 
     const genreList = screen.getByRole('navigation');
     expect(genreList).toBeInTheDocument();
-    expect(within(genreList).getByText('genre1')).toBeInTheDocument();
-    expect(within(genreList).getByText('genre2')).toBeInTheDocument();
+    genres.forEach(genre => {
+      expect(within(genreList).getByText(genre)).toBeInTheDocument();
+    });
   });
 
-  it('renders with two not selected genres', () => {
+  it('renders with three not selected genres', () => {
     render(<GenreList list={genres} onSelect={jest.fn()} />);
 
-    expect(screen.getByText('genre1')).not.toHaveClass('genre-item-selected');
-    expect(screen.getByText('genre2')).not.toHaveClass('genre-item-selected');
+    genres.forEach(genre => {
+      expect(screen.getByText(genre)).not.toHaveClass('genre-item-selected');
+    });
   });
 
-  it('renders with both genres not selected and rerenders one selected and back', () => {
+  it('renders with three genres not selected and rerenders one selected and back', () => {
     const { rerender } = render(<GenreList list={genres} onSelect={jest.fn()} />);
 
-    rerender(<GenreList list={genres} selectedGenre='genre1' onSelect={jest.fn()} />);
-    expect(screen.getByText('genre1')).toHaveClass('genre-item-selected');
+    rerender(<GenreList list={genres} selectedGenre={genres[0]} onSelect={jest.fn()} />);
+    expect(screen.getByText(genres[0])).toHaveClass('genre-item-selected');
 
     rerender(<GenreList list={genres} selectedGenre={null} onSelect={jest.fn()} />);
-    expect(screen.getByText('genre1')).not.toHaveClass('genre-item-selected');
+    expect(screen.getByText(genres[0])).not.toHaveClass('genre-item-selected');
   });
 
   it('calls the onSelect callback handler', () => {
@@ -45,7 +46,7 @@ describe('GenreList', () => {
 
     render(<GenreList list={genres} onSelect={onSelectHandler} />);
 
-    userEvent.click(screen.getByText('genre1'));
+    userEvent.click(screen.getByText(genres[0]));
     expect(onSelectHandler).toBeCalledTimes(1);
   });
 });

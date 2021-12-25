@@ -2,32 +2,33 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import GenreItem from '.';
+import { genres } from '../../../utils/testData';
 
-const item = 'item1';
+const genre = genres[0];
 
 describe('GenreItem', () => {
   it('renders with name', () => {
-    render(<GenreItem item={item} onClick={jest.fn()} />);
-    expect(screen.getByText(item)).toBeInTheDocument();
+    render(<GenreItem item={genre} onClick={jest.fn()} />);
+    expect(screen.getByText(genre)).toBeInTheDocument();
   });
 
   it('renders as not selected', () => {
-    render(<GenreItem item={item} onClick={jest.fn()} />);
-    expect(screen.getByText(item)).not.toHaveClass('genre-item-selected');
+    render(<GenreItem item={genre} onClick={jest.fn()} />);
+    expect(screen.getByText(genre)).not.toHaveClass('genre-item-selected');
   });
 
   it('renders as not selected and rerenders as selected and back', () => {
-    const { rerender } = render(<GenreItem item={item} onClick={jest.fn()} />);
+    const { rerender } = render(<GenreItem item={genre} onClick={jest.fn()} />);
 
-    rerender(<GenreItem item={item} isSelected={true} onClick={jest.fn()} />);
+    rerender(<GenreItem item={genre} isSelected={true} onClick={jest.fn()} />);
 
-    let genreItem = screen.getByText(item);
+    let genreItem = screen.getByText(genre);
     expect(genreItem).toHaveClass('genre-item-selected');
     expect(genreItem).toContainHTML('<span class="arrow"></span>');
 
-    rerender(<GenreItem item={item} isSelected={false} onClick={jest.fn()} />);
+    rerender(<GenreItem item={genre} isSelected={false} onClick={jest.fn()} />);
 
-    genreItem = screen.getByText(item);
+    genreItem = screen.getByText(genre);
     expect(genreItem).not.toHaveClass('genre-item-selected');
     expect(genreItem).not.toContainHTML('<span class="arrow"></span>');
   });
@@ -35,9 +36,9 @@ describe('GenreItem', () => {
   it('calls the onClick callback handler', () => {
     const onClickHandler = jest.fn();
 
-    render(<GenreItem item={item} onClick={onClickHandler} />);
+    render(<GenreItem item={genre} onClick={onClickHandler} />);
 
-    userEvent.click(screen.getByText(item));
+    userEvent.click(screen.getByText(genre));
     expect(onClickHandler).toBeCalledTimes(1);
   });
 });

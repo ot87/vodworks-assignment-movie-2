@@ -2,14 +2,9 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import Poster from '.';
+import { movies } from '../../../utils/testData';
 
-const movie = {
-  genre_ids: ['genre_id'],
-  poster_path: 'poster_path',
-  title: 'title',
-  overview: 'overview',
-  release_date: 'release_date'
-};
+const movie = movies[0];
 const byRoleOption = { name: `The poster of the "${movie.title}"` };
 
 describe('Poster', () => {
