@@ -1,29 +1,15 @@
-import { useState } from 'react';
 import './App.css';
 
-import GenreList from './components/GenreList';
-import PosterBoard from './components/PosterBoard';
+import MainView from './components/MainView';
 import useLoadMovies from './hooks/useLoadMovies';
 
 function App() {
-  const [{ movies, genres }] = useLoadMovies();
-  const [selectedGenre, setSelectedGenre] = useState(null);
-
-  const filteredMovies = (
-    selectedGenre ?
-      movies.filter(movie => movie.genre_ids.includes(selectedGenre))
-    : movies
-  );
+  const [moviesInfo] = useLoadMovies();
 
   return (
-    <main className='content'>
-      <GenreList
-        list={genres}
-        selectedGenre={selectedGenre}
-        onSelect={setSelectedGenre}
-      />
-      <PosterBoard movies={filteredMovies} />
-    </main>
+    <div className='container'>
+      <MainView {...moviesInfo} />
+    </div>
   );
 }
 

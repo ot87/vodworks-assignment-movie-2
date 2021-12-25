@@ -1,0 +1,15 @@
+.main-view {
+  width: 100%;
+  padding: 3vw 5vw 0;
+}
+
+.heading {
+  width: fit-content;
+  border-bottom: 2px solid;
+  margin-left: 10px;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+}

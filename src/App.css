@@ -1,5 +1,3 @@
-.content {
+.container {
   display: flex;
-  justify-content: space-between;
-  padding: 5vw 5vw 0;
 }
