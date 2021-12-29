@@ -1,28 +1,27 @@
 import './style.css';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 /**
  * Renders a row of the genre.
  *
  * @param {Object}   props
  * @param {string}   props.item         - The genre name.
+ * @param {boolean}  [props.isActive]   - Whether the border should be drawn.
  * @param {boolean}  [props.isSelected] - Whether the genre is selected.
- * @param {Function} props.onClick      - On genre click handler.
  */
 function GenreItem({
   item,
-  isSelected = false,
-  onClick
+  isActive = false,
+  isSelected = false
 }) {
-  const handleOnClick = () => {
-    onClick(item);
-  };
+  const itemClass = classNames({
+    'genre-item': true,
+    'genre-item-active': isActive && isSelected
+  });
 
   return (
-    <div
-      className={`genre-item${isSelected ? ' genre-item-selected' : ''}`}
-      onClick={handleOnClick}
-    >
+    <div className={itemClass}>
       {item}
       {isSelected ? <span className='arrow'></span> : ''}
     </div>
@@ -31,8 +30,8 @@ function GenreItem({
 
 GenreItem.propTypes = {
   item:       PropTypes.string.isRequired,
-  isSelected: PropTypes.bool,
-  onClick:    PropTypes.func.isRequired
+  isActive:   PropTypes.bool,
+  isSelected: PropTypes.bool
 };
 
 export default GenreItem;

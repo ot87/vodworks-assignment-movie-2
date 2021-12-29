@@ -1,3 +1,7 @@
 .genre-list {
   width: 20%;
 }
+
+.genre-list:focus {
+  outline: none;
+}
