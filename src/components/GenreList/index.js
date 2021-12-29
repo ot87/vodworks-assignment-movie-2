@@ -10,7 +10,7 @@ import GenreItem from './GenreItem';
  * @param {Object}      props
  * @param {string[]}    props.list            - The list of the genres.
  * @param {boolean}     [props.isActive]      - Whether the component is active.
- * @param {number|null} [props.selectedGenre] - Selected genre.
+ * @param {string|null} [props.selectedGenre] - Selected genre.
  * @param {Function}    props.onSelect        - On genre selection handler.
  * @param {Function}    props.onEnter         - On genre enter handler.
  */
