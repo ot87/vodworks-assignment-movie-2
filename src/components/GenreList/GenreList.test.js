@@ -74,7 +74,7 @@ describe('GenreList keys', () => {
     ${'ArrowUp'}   | ${1}
     ${'ArrowDown'} | ${1}
   `(
-    'renders as inactive an calls "onSelectHandler" with the first genre by "$key" key "$times" time(s)',
+    'renders as inactive and calls "onSelectHandler" with the first genre by "$key" key "$times" time(s)',
     ({ key, times }) => {
       const { genreList, onSelectHandler } = renderGenreList();
 
@@ -101,7 +101,7 @@ describe('GenreList keys', () => {
     expect(onSelectHandler).toBeCalledTimes(2);
   });
 
-  it('"Enter" key calls "onEnterHandler" with corresponding genre', () => {
+  it('"Enter" key calls "onEnterHandler"', () => {
     const { genreList, onEnterHandler } = renderGenreList();
 
     userEvent.click(genreList);

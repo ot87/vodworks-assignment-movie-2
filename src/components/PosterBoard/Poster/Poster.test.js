@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 
 import Poster from '.';
 import { movies } from '../../../utils/testData';
@@ -8,37 +7,70 @@ import { getByRoleOption } from '../../../utils/testHelpers';
 const movie = movies[0];
 const byRoleOption = getByRoleOption(movie.title);
 
+const renderPoster = (renderProps = {}) => {
+  const initProps = {
+    posterPath: movie.poster_path,
+    title: movie.title
+  };
+  const { rerender } = render(<Poster {...initProps} {...renderProps} />);
+
+  return {
+    poster: screen.getByRole('img', byRoleOption),
+    rerenderPoster: rerenderProps => {
+      rerender(<Poster {...initProps} {...rerenderProps} />);
+    }
+  };
+};
+
 describe('Poster', () => {
   it('renders with src and alt attributes', () => {
-    render(<Poster movie={movie} onSelect={jest.fn()} />);
+    const { poster } = renderPoster();
 
-    const poster = screen.getByRole('img', byRoleOption);
     expect(poster).toBeInTheDocument();
     expect(poster).toHaveAttribute('src', movie.poster_path);
     expect(poster).toHaveAttribute('alt', byRoleOption.name);
   });
 
-  it('renders as not selected', () => {
-    render(<Poster movie={movie} onSelect={jest.fn()} />);
-    expect(screen.getByRole('img', byRoleOption)).not.toHaveClass('poster-selected');
+  it('renders as not active and not selected', () => {
+    const { poster } = renderPoster();
+
+    expect(poster).not.toHaveClass('poster-active');
+    expect(poster).not.toHaveClass('poster-selected');
   });
 
-  it('renders as not selected and rerenders as selected and back', () => {
-    const { rerender } = render(<Poster movie={movie} onSelect={jest.fn()} />);
+  it('renders and rerenders as selected and back', () => {
+    const { rerenderPoster } = renderPoster();
 
-    rerender(<Poster movie={movie} isSelected={true} onSelect={jest.fn()} />);
+    rerenderPoster({ isSelected: true });
     expect(screen.getByRole('img', byRoleOption)).toHaveClass('poster-selected');
 
-    rerender(<Poster movie={movie} isSelected={false} onSelect={jest.fn()} />);
+    rerenderPoster({ isSelected: false });
     expect(screen.getByRole('img', byRoleOption)).not.toHaveClass('poster-selected');
   });
 
-  it('calls the onSelect callback handler', () => {
-    const onSelectHandler = jest.fn();
+  it('renders and rerenders as active and back', () => {
+    const { rerenderPoster } = renderPoster();
 
-    render(<Poster movie={movie} onSelect={onSelectHandler} />);
+    rerenderPoster({ isActive: true, isSelected: true });
 
-    userEvent.click(screen.getByRole('img', byRoleOption));
-    expect(onSelectHandler).toBeCalledTimes(1);
+    let poster = screen.getByRole('img', byRoleOption);
+    expect(poster).toHaveClass('poster-active');
+    expect(poster).toHaveClass('poster-selected');
+
+    rerenderPoster({ isActive: false, isSelected: false });
+
+    poster = screen.getByRole('img', byRoleOption);
+    expect(poster).not.toHaveClass('poster-active');
+    expect(poster).not.toHaveClass('poster-selected');
+  });
+
+  it('renders as active and rerenders as selected', () => {
+    const { rerenderPoster } = renderPoster({ isActive: true, isSelected: true });
+
+    rerenderPoster({ isActive: false, isSelected: true });
+
+    let poster = screen.getByRole('img', byRoleOption);
+    expect(poster).not.toHaveClass('poster-active');
+    expect(poster).toHaveClass('poster-selected');
   });
 });

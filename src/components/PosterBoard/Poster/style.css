@@ -6,9 +6,12 @@
   transition: transform .3s;
 }
 
-.poster-selected {
+.poster-active {
   border: 2px solid;
   border-radius: 5px;
   margin: 0;
+}
+
+.poster-selected {
   transform: scale(1.1);
 }

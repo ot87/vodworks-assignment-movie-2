@@ -1,50 +1,42 @@
 import './style.css';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 /**
  * Renders a poster of the movie.
  *
- * @param {Object}   props
- * @param {Object}   props.movie              - The movie object.
- * @param {string[]} props.movie.genre_ids    - The list of movie's genres.
- * @param {string}   props.movie.poster_path  - The poster's url.
- * @param {string}   props.movie.title        - The title of the movie.
- * @param {string}   props.movie.overview     - The overview of the movie.
- * @param {string}   props.movie.release_date - The release data of the movie.
- * @param {boolean}  [props.isSelected]       - Whether the movie is selected.
- * @param {Function} props.onSelect           - On movie poster click handler.
+ * @param {Object}  props
+ * @param {string}  props.posterPath   - The poster's url.
+ * @param {string}  props.title        - The title of the movie.
+ * @param {boolean} [props.isActive]   - Whether the border should be drawn.
+ * @param {boolean} [props.isSelected] - Whether the movie is selected.
  */
 function Poster({
-  movie,
-  isSelected = false,
-  onSelect
+  posterPath,
+  title,
+  isActive = false,
+  isSelected = false
 }) {
-  const handleOnClick = () => {
-    onSelect(movie.title);
-  };
+  const posterClass = classNames({
+    'poster': true,
+    'poster-active': isActive && isSelected,
+    'poster-selected': isSelected
+  });
 
   return (
     <img
-      className={`poster${isSelected ? ' poster-selected' : ''}`}
-      src={movie.poster_path}
-      alt={`The poster of the "${movie.title}"`}
-      onClick={handleOnClick}
+      className={posterClass}
+      src={posterPath}
+      alt={`The poster of the "${title}"`}
     />
   );
 }
 
 Poster.propTypes = {
-  movie:      PropTypes.shape({
-    genre_ids:    PropTypes.arrayOf(
-      PropTypes.string.isRequired
-    ).isRequired,
-    poster_path:  PropTypes.string.isRequired,
-    title:        PropTypes.string.isRequired,
-    overview:     PropTypes.string.isRequired,
-    release_date: PropTypes.string.isRequired
-  }).isRequired,
-  isSelected: PropTypes.bool,
-  onSelect:   PropTypes.func.isRequired
+  posterPath: PropTypes.string.isRequired,
+  title:      PropTypes.string.isRequired,
+  isActive:   PropTypes.bool,
+  isSelected: PropTypes.bool
 };
 
 export default Poster;
