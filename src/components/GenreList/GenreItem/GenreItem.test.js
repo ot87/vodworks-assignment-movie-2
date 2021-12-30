@@ -6,7 +6,7 @@ import { genres } from '../../../utils/testData';
 const genre = genres[0];
 
 const renderGenreItem = (renderProps = {}) => {
-  const initProps = { item: genres[0] };
+  const initProps = { item: genre };
   const { rerender } = render(<GenreItem {...initProps} {...renderProps} />);
 
   return {
