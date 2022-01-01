@@ -103,13 +103,11 @@ describe('GenreList keys', () => {
     const { genreList, onSelectHandler, rerenderGenreList } = renderGenreList({ selectedGenre: genres[0] });
 
     userEvent.click(genreList);
-
     userEvent.keyboard(`{ArrowUp}`);
     expect(onSelectHandler).toBeCalledWith(genres[genres.length - 1]);
-
     rerenderGenreList({ selectedGenre: genres[genres.length - 1] });
-    userEvent.click(genreList);
 
+    userEvent.click(genreList);
     userEvent.keyboard(`{ArrowDown}`);
     expect(onSelectHandler).toBeCalledWith(genres[0]);
   });
