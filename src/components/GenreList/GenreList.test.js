@@ -85,36 +85,58 @@ describe('GenreList keys', () => {
     }
   );
 
-  it('"ArrowDown" and "ArrowUp" keys calls "onSelectHandler" with corresponding genre', () => {
-    const { genreList, onSelectHandler, rerenderGenreList } = renderGenreList({ selectedGenre: genres[1] });
+  it('swithes through all the genres', () => {
+    const { genreList, onSelectHandler, rerenderGenreList } = renderGenreList();
 
     userEvent.click(genreList);
-    userEvent.keyboard(`{ArrowDown}`);
-    expect(onSelectHandler).toBeCalledWith(genres[2]);
 
-    rerenderGenreList({ selectedGenre: genres[2] });
+    genres.forEach(genre => {
+      userEvent.keyboard('{ArrowDown}');
+      expect(onSelectHandler).toBeCalledWith(genre);
+      rerenderGenreList({ selectedGenre: genre });
+    });
+
+    expect(onSelectHandler).toBeCalledTimes(genres.length);
+  });
+
+  it('switches through extreme genres', () => {
+    const { genreList, onSelectHandler, rerenderGenreList } = renderGenreList({ selectedGenre: genres[0] });
 
     userEvent.click(genreList);
+
     userEvent.keyboard(`{ArrowUp}`);
-    expect(onSelectHandler).toBeCalledWith(genres[1]);
+    expect(onSelectHandler).toBeCalledWith(genres[genres.length - 1]);
 
-    expect(onSelectHandler).toBeCalledTimes(2);
+    rerenderGenreList({ selectedGenre: genres[genres.length - 1] });
+    userEvent.click(genreList);
+
+    userEvent.keyboard(`{ArrowDown}`);
+    expect(onSelectHandler).toBeCalledWith(genres[0]);
   });
 
   it('"Enter" key calls "onEnterHandler"', () => {
-    const { genreList, onEnterHandler } = renderGenreList();
+    const { genreList, onEnterHandler } = renderGenreList({ selectedGenre: genres[0] });
 
     userEvent.click(genreList);
-    userEvent.keyboard(`{Enter}`);
+    userEvent.keyboard('{Enter}');
     expect(onEnterHandler).toBeCalled();
   });
 
   it('"b" key calls "onSelectHandler" with "null" value', () => {
-    const { genreList, onSelectHandler } = renderGenreList();
+    const { genreList, onSelectHandler } = renderGenreList({ selectedGenre: genres[0] });
 
     userEvent.click(genreList);
-    userEvent.keyboard(`{b}`);
+    userEvent.keyboard('{b}');
     expect(onSelectHandler).toBeCalledTimes(1);
     expect(onSelectHandler).toBeCalledWith(null);
+  });
+
+  it('nothing happens for another key, for ex. "Control"', () => {
+    const { genreList, onSelectHandler, onEnterHandler } = renderGenreList();
+
+    userEvent.click(genreList);
+    userEvent.keyboard('{Control}');
+    expect(onSelectHandler).not.toBeCalled();
+    expect(onEnterHandler).not.toBeCalled();
   });
 });
