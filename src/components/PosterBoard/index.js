@@ -43,7 +43,7 @@ const PosterBoard = forwardRef(function PosterBoard({
           newMovieIndex = currentIndex - 1;
 
           // if the poster is on the left side of the row,
-          // then move it to the right side
+          // then select the poster on the right side
           if (currentIndex % step === 0) {
             newMovieIndex = currentIndex + step - 1;
             // if there are less than 5 posters in the last row
@@ -55,7 +55,7 @@ const PosterBoard = forwardRef(function PosterBoard({
           newMovieIndex = currentIndex + 1;
 
           // if the poster is on the right side of the row,
-          // then move it to the left side
+          // then select the poster on the left side
           if (newMovieIndex % step === 0) {
             newMovieIndex -= step;
           // if the poster is the last one but is not divisible by 5
@@ -67,7 +67,7 @@ const PosterBoard = forwardRef(function PosterBoard({
         if (key === 'ArrowUp') {
           newMovieIndex = currentIndex - step;
 
-          // if the poster in the first row
+          // if the poster is in the first row
           if (newMovieIndex < 0) {
             newMovieIndex = movies.length + currentIndex - movies.length % step;
             if (newMovieIndex >= movies.length) {

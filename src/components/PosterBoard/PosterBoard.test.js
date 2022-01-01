@@ -36,7 +36,7 @@ describe('PosterBoard', () => {
     expect(posterBoard).toBeEmptyDOMElement();
   });
 
-  it('renders with posters that are not selected', () => {
+  it('renders with not selected posters', () => {
     const { posterBoard } = renderPosterBoard();
 
     expect(posterBoard).toBeInTheDocument();
@@ -110,25 +110,75 @@ describe('PosterBoard keys', () => {
     } = renderPosterBoard({ selectedPoster: movies[5].title });
 
     userEvent.click(posterBoard);
-    userEvent.keyboard(`{ArrowDown}`);
+    userEvent.keyboard('{ArrowDown}');
     expect(onSelectHandler).toBeCalledWith(movies[0].title);
-
     rerenderPosterBoard({ selectedPoster: movies[5].title });
-    userEvent.click(posterBoard);
-    userEvent.keyboard(`{ArrowUp}`);
-    expect(onSelectHandler).toBeCalledWith(movies[0].title);
 
+    userEvent.click(posterBoard);
+    userEvent.keyboard('{ArrowUp}');
+    expect(onSelectHandler).toBeCalledWith(movies[0].title);
     rerenderPosterBoard({ selectedPoster: movies[4].title });
-    userEvent.click(posterBoard);
-    userEvent.keyboard(`{ArrowRight}`);
-    expect(onSelectHandler).toBeCalledWith(movies[0].title);
 
-    rerenderPosterBoard({ selectedPoster: movies[0].title });
     userEvent.click(posterBoard);
-    userEvent.keyboard(`{ArrowLeft}`);
+    userEvent.keyboard('{ArrowRight}');
+    expect(onSelectHandler).toBeCalledWith(movies[0].title);
+    rerenderPosterBoard({ selectedPoster: movies[0].title });
+
+    userEvent.click(posterBoard);
+    userEvent.keyboard('{ArrowLeft}');
     expect(onSelectHandler).toBeCalledWith(movies[4].title);
 
     expect(onSelectHandler).toBeCalledTimes(4);
+  });
+
+  it('switches through posters', () => {
+    const {
+      posterBoard,
+      onSelectHandler,
+      rerenderPosterBoard
+    } = renderPosterBoard({ selectedPoster: movies[0].title });
+
+    userEvent.click(posterBoard);
+    userEvent.keyboard('{ArrowUp}');
+    expect(onSelectHandler).toBeCalledWith(movies[5].title);
+    rerenderPosterBoard({ selectedPoster: movies[5].title });
+
+    movies.slice(6).forEach(movie => {
+      userEvent.keyboard('{ArrowRight}');
+      expect(onSelectHandler).toBeCalledWith(movie.title);
+      rerenderPosterBoard({ selectedPoster: movie.title });
+    });
+
+    userEvent.keyboard('{ArrowRight}');
+    expect(onSelectHandler).toBeCalledWith(movies[5].title);
+    rerenderPosterBoard({ selectedPoster: movies[5].title });
+
+    userEvent.keyboard('{ArrowLeft}');
+    expect(onSelectHandler).toBeCalledWith(movies[6].title);
+    rerenderPosterBoard({ selectedPoster: movies[6].title });
+
+    userEvent.keyboard('{ArrowDown}');
+    expect(onSelectHandler).toBeCalledWith(movies[1].title);
+    rerenderPosterBoard({ selectedPoster: movies[1].title });
+
+    userEvent.keyboard('{ArrowLeft}');
+    expect(onSelectHandler).toBeCalledWith(movies[0].title);
+    rerenderPosterBoard({ selectedPoster: movies[0].title });
+
+    userEvent.keyboard('{ArrowLeft}');
+    expect(onSelectHandler).toBeCalledWith(movies[4].title);
+    rerenderPosterBoard({ selectedPoster: movies[4].title });
+
+    userEvent.keyboard('{ArrowDown}');
+    expect(onSelectHandler).toBeCalledWith(movies[4].title);
+    rerenderPosterBoard({ selectedPoster: movies[4].title });
+
+    userEvent.keyboard('{ArrowUp}');
+    expect(onSelectHandler).toBeCalledWith(movies[4].title);
+    rerenderPosterBoard({ selectedPoster: movies[4].title });
+
+    userEvent.keyboard('{ArrowRight}');
+    expect(onSelectHandler).toBeCalledWith(movies[0].title);
   });
 
   it('"Enter" key calls "onEnterHandler" with a selected movie', () => {
@@ -138,16 +188,31 @@ describe('PosterBoard keys', () => {
     } = renderPosterBoard({ selectedPoster: movies[0].title });
 
     userEvent.click(posterBoard);
-    userEvent.keyboard(`{Enter}`);
+    userEvent.keyboard('{Enter}');
     expect(onEnterHandler).toBeCalled();
     expect(onEnterHandler).toBeCalledWith(movies[0]);
   });
 
   it('"b" key calls "onBackHandler"', () => {
-    const { posterBoard, onBackHandler } = renderPosterBoard();
+    const { posterBoard, onBackHandler } = renderPosterBoard({ selectedPoster: movies[0].title });
 
     userEvent.click(posterBoard);
-    userEvent.keyboard(`{b}`);
+    userEvent.keyboard('{b}');
     expect(onBackHandler).toBeCalled();
+  });
+
+  it('nothing happens for another key, for ex. "Control"', () => {
+    const {
+      posterBoard,
+      onSelectHandler,
+      onEnterHandler,
+      onBackHandler
+    } = renderPosterBoard({ selectedPoster: movies[0].title });
+
+    userEvent.click(posterBoard);
+    userEvent.keyboard('{Control}');
+    expect(onSelectHandler).not.toBeCalled();
+    expect(onEnterHandler).not.toBeCalled();
+    expect(onBackHandler).not.toBeCalled();
   });
 });
