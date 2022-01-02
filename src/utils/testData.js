@@ -19,13 +19,13 @@ export const movies = [{
   overview: 'overview3',
   release_date: 'release_date3'
 }, {
-  genre_ids: ['genre2'],
+  genre_ids: ['genre1', 'genre2'],
   poster_path: 'poster_path4',
   title: 'title4',
   overview: 'overview4',
   release_date: 'release_date4'
 }, {
-  genre_ids: ['genre3'],
+  genre_ids: ['genre1', 'genre3'],
   poster_path: 'poster_path5',
   title: 'title5',
   overview: 'overview5',
@@ -36,6 +36,12 @@ export const movies = [{
   title: 'title6',
   overview: 'overview6',
   release_date: 'release_date6'
+}, {
+  genre_ids: ['genre1', 'genre2'],
+  poster_path: 'poster_path7',
+  title: 'title7',
+  overview: 'overview7',
+  release_date: 'release_date7'
 }];
 
 const moviesTestData = { genres, movies };
