@@ -16,9 +16,9 @@ import Poster from './Poster';
  * @param {string}      props.movies[].release_date - The release data of the movie.
  * @param {boolean}     [props.isActive]            - Whether the component is active.
  * @param {string|null} [props.selectedPoster]      - Selected movie.
- * @param {Function}    props.onSelect              - On movie selection handler.
- * @param {Function}    props.onEnter               - On movie enter handler.
- * @param {Function}    props.onBack                - On movie back handler.
+ * @param {Function}    props.onSelect              - On poster selection handler.
+ * @param {Function}    props.onEnter               - On poster enter handler.
+ * @param {Function}    props.onBack                - On poster back handler.
  */
 const PosterBoard = forwardRef(function PosterBoard({
   movies,
