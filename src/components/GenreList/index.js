@@ -23,25 +23,23 @@ const GenreList = forwardRef(function GenreList({
 }, ref) {
   const handleKeyDown = ({ key }) => {
     if (['ArrowUp', 'ArrowDown'].includes(key)) {
-      let newItem = list[0];
+      const currentIndex = list.findIndex(item => item === selectedGenre);
+      let nextItemIndex;
 
-      if (selectedGenre) {
-        const currentIndex = list.findIndex(item => item === selectedGenre);
-
-        if (key === 'ArrowUp') {
-          newItem = list[(currentIndex || list.length) - 1];
-        } else {
-          newItem = list[(
-            currentIndex === list.length - 1 ?
-              0
-            : currentIndex + 1
-          )];
-        }
+      if (key === 'ArrowUp') {
+        nextItemIndex = (currentIndex > 0 ? currentIndex : list.length) - 1;
+      } else {
+        nextItemIndex = (
+          currentIndex < list.length - 1 ?
+            currentIndex + 1
+          : 0
+        );
       }
-      onSelect(newItem);
-    } else if (key === 'Enter') {
+
+      onSelect(list[nextItemIndex]);
+    } else if (key === 'Enter' && selectedGenre) {
       onEnter();
-    } else if (key === 'b') {
+    } else if (key === 'b' && selectedGenre) {
       onSelect(null);
     }
   };

@@ -69,29 +69,44 @@ describe('GenreList', () => {
 });
 
 describe('GenreList keys', () => {
+  const upGenre = genres[genres.length - 1];
+  const downGenre = genres[0];
+
   it.each`
-    key            | times
-    ${'ArrowUp'}   | ${1}
-    ${'ArrowDown'} | ${1}
+    key            | times | param
+    ${'ArrowUp'}   | ${1}  | ${upGenre}
+    ${'ArrowDown'} | ${1}  | ${downGenre}
   `(
-    'renders as inactive and calls "onSelectHandler" with the first genre by "$key" key "$times" time(s)',
-    ({ key, times }) => {
+    'renders as inactive and calls "onSelectHandler" with the first genre by "$key" key "$times" time(s) with "$param"',
+    ({ key, times, param }) => {
       const { genreList, onSelectHandler } = renderGenreList();
 
       userEvent.click(genreList);
       userEvent.keyboard(`{${key}}`);
       expect(onSelectHandler).toBeCalledTimes(times);
-      expect(onSelectHandler).toBeCalledWith(genres[0]);
+      expect(onSelectHandler).toBeCalledWith(param);
     }
   );
 
-  it('swithes through all the genres', () => {
+  it('swithes through all the genres down', () => {
     const { genreList, onSelectHandler, rerenderGenreList } = renderGenreList();
 
     userEvent.click(genreList);
-
     genres.forEach(genre => {
       userEvent.keyboard('{ArrowDown}');
+      expect(onSelectHandler).toBeCalledWith(genre);
+      rerenderGenreList({ selectedGenre: genre });
+    });
+
+    expect(onSelectHandler).toBeCalledTimes(genres.length);
+  });
+
+  it('swithes through all the genres up', () => {
+    const { genreList, onSelectHandler, rerenderGenreList } = renderGenreList();
+
+    userEvent.click(genreList);
+    [...genres].reverse().forEach(genre => {
+      userEvent.keyboard('{ArrowUp}');
       expect(onSelectHandler).toBeCalledWith(genre);
       rerenderGenreList({ selectedGenre: genre });
     });
@@ -112,12 +127,28 @@ describe('GenreList keys', () => {
     expect(onSelectHandler).toBeCalledWith(genres[0]);
   });
 
+  it('"Enter" key does not call "onEnterHandler" when genre is not selected', () => {
+    const { genreList, onEnterHandler } = renderGenreList();
+
+    userEvent.click(genreList);
+    userEvent.keyboard('{Enter}');
+    expect(onEnterHandler).not.toBeCalled();
+  });
+
   it('"Enter" key calls "onEnterHandler"', () => {
     const { genreList, onEnterHandler } = renderGenreList({ selectedGenre: genres[0] });
 
     userEvent.click(genreList);
     userEvent.keyboard('{Enter}');
     expect(onEnterHandler).toBeCalled();
+  });
+
+  it('"b" key does not call "onSelectHandler" when genre is not selected', () => {
+    const { genreList, onSelectHandler } = renderGenreList();
+
+    userEvent.click(genreList);
+    userEvent.keyboard('{b}');
+    expect(onSelectHandler).not.toBeCalled();
   });
 
   it('"b" key calls "onSelectHandler" with "null" value', () => {
