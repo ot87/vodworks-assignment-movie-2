@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import './style.css';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import GenreItem from './GenreItem';
 
@@ -43,11 +44,15 @@ const GenreList = forwardRef(function GenreList({
       onSelect(null);
     }
   };
+  const genreListClass = classNames({
+    'genre-list': true,
+    'genre-list-active': isActive
+  });
 
   return (
     <nav
       ref={ref}
-      className='genre-list' 
+      className={genreListClass}
       onKeyDown={handleKeyDown}
       tabIndex={-1}
     >

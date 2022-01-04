@@ -17,6 +17,7 @@ function GenreItem({
 }) {
   const itemClass = classNames({
     'genre-item': true,
+    'genre-item-selected': isSelected,
     'genre-item-active': isActive && isSelected
   });
 

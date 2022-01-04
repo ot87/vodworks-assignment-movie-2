@@ -1,12 +1,13 @@
 .main-view {
   width: 100%;
-  padding: 3vw 5vw 0;
+  padding: 3vw 5vw 1vw;
 }
 
 .heading {
   width: fit-content;
   border-bottom: 2px solid;
   margin-left: 10px;
+  color: #f3f3f3;
 }
 
 .content {

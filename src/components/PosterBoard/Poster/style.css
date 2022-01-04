@@ -2,16 +2,17 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  margin: 2px;
+  margin: 3px;
   transition: transform .3s;
 }
 
 .poster-active {
-  border: 2px solid;
+  border: 3px solid #f57610;
   border-radius: 5px;
   margin: 0;
 }
 
 .poster-selected {
   transform: scale(1.1);
+  filter: brightness(1);
 }

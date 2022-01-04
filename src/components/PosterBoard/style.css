@@ -5,6 +5,10 @@
   width: 75%;
 }
 
+.poster-board-active > * {
+  filter: brightness(0.8);
+}
+
 .poster-board:focus {
   outline: none;
 }

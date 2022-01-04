@@ -2,6 +2,14 @@
   width: 20%;
 }
 
+.genre-list > * {
+  color: #424242;
+}
+
+.genre-list-active > * {
+  color: #656565;
+}
+
 .genre-list:focus {
   outline: none;
 }

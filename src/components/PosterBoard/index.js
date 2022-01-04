@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import './style.css';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import Poster from './Poster';
 
@@ -91,11 +92,15 @@ const PosterBoard = forwardRef(function PosterBoard({
       onBack();
     }
   };
+  const posterBoardClass = classNames({
+    'poster-board': true,
+    'poster-board-active': isActive
+  });
 
   return (
     <section
       ref={ref}
-      className='poster-board'
+      className={posterBoardClass}
       style={{ gridTemplateColumns: `repeat(${step}, 1fr)` }}
       role='grid'
       onKeyDown={handleKeyDown}

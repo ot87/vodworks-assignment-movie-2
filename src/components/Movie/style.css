@@ -9,6 +9,7 @@
 }
 
 .movie-title {
+  color: #dddddd;
   font-size: 2rem;
   margin-bottom: 0.75em;
 }
@@ -31,12 +32,17 @@
 }
 
 .movie-label {
-  border-top: 2px solid;
+  border-top: 3px solid #232323;
   min-width: 30%;
   padding-top: 0.5rem;
 }
 
+.movie-label-name {
+  color: #3e3e3e;
+}
+
 .movie-label-text {
+  color: #a1a1a1;
   font-size: 1.25rem;
 }
 
@@ -52,15 +58,19 @@
 
 .movie-button {
   width: 30%;
+  color: #bbbbbb;
   text-align: center;
   padding: 1.5rem 0;
 }
 
 .movie-button:focus {
-  border: 2px solid;
+  color: #fdf5de;
+  background-color: #f57610;
   border-radius: 5px;
+  outline: none;
 }
 
 .movie-overview {
   width: 47%;
+  color: #878787;
 }

@@ -1,5 +1,7 @@
 .container {
   display: flex;
+  background-color: #1a1a1a;
+  min-height: 100vh;
 }
 
 .hide-movie > *:first-child {
