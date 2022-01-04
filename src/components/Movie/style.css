@@ -1,0 +1,66 @@
+.movie {
+  width: 100%;
+  padding-top: 3vw;
+  padding-right: 3vw;
+}
+
+.movie:focus {
+  outline: none;
+}
+
+.movie-title {
+  font-size: 2rem;
+  margin-bottom: 0.75em;
+}
+
+.movie-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.movie-info {
+  width: 47%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.5rem;
+}
+
+.movie-labels {
+  display: flex;
+  justify-content: space-between;
+}
+
+.movie-label {
+  border-top: 2px solid;
+  min-width: 30%;
+  padding-top: 0.5rem;
+}
+
+.movie-label-text {
+  font-size: 1.25rem;
+}
+
+.movie-image {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.movie-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.movie-button {
+  width: 30%;
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+.movie-button:focus {
+  border: 2px solid;
+  border-radius: 5px;
+}
+
+.movie-overview {
+  width: 47%;
+}
