@@ -1,3 +1,10 @@
 .container {
   display: flex;
 }
+
+.hide-movie > *:first-child {
+  transition: margin-left .5s;
+}
+.show-movie > *:first-child {
+  margin-left: -65vw;
+}
